@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Encuesta Web</h1>
+    <h4>Pregunta N° {{preg_num + 1}}</h4>
+    <form action="/" method="POST">
+        {% if preg_num == 0 %}
+          <p>Por favor, responde la primera pregunta para comenzar:</p>
+        {% elif preg_num > 0 %}
+          <p>Esta en la Pregunta N° {{preg_num + 1}} </p>
+        {% else %}
+          <p>Por favor, responde la siguiente pregunta:</p>
+        {% endif %}
+        <div class="pregunta" {% if preg_num != 0 and not respuestas %}style="display: none;"{% endif %}>
+            <h2>{{ pregunta['pregunta'] }}</h2>
+            {% for respuesta in pregunta['respuestas'] %}
+            <label>
+                <input type="radio" name="respuesta" value="{{ respuesta }}">
+                {{ respuesta }}
+            </label>
+            {% endfor %}            
+            <input type="hidden" name="pregunta" value="{{ preg_num }}">
+            <button type="submit">Siguiente</button>
+        </div>
+    </form>
+{% endblock %}
+
